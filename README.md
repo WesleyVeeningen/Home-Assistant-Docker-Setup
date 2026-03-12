@@ -9,3 +9,5 @@ nano ~/.config/lxsession/LXDE-pi/autostart
 @xset s noblank
 @unclutter -idle 0
 @chromium-browser --kiosk --noerrdialogs --disable-infobars http://localhost:8123
+
+chromium --start-fullscreen --kiosk --noerrdialogs --disable-infobars --disable-session-crashed-bubble http://localhost:8123
