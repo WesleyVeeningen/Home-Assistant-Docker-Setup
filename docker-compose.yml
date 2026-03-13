@@ -1,12 +1,28 @@
+version: "3.9"
 services:
   homeassistant:
     container_name: homeassistant
     image: ghcr.io/home-assistant/home-assistant:stable
     restart: unless-stopped
+
+    # Use host networking for faster camera streams and integrations
+    network_mode: host
     ports:
-      - "8123:8123"
+        - "8123:8123"
     volumes:
       - ./config:/config
       - /etc/localtime:/etc/localtime:ro
+
+      # Add GPU / hardware acceleration if available
+      - /dev/dri:/dev/dri   # Intel/VAAPI GPU
+      # - /dev/video0:/dev/video0  # if using local cameras
+
     environment:
-      TZ: America/New_Yorka
+      TZ: America/New_York
+
+    # Optional: assign resources to improve performance
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'      # Give 2 CPU cores if available
+          memory: 4g        # Give 4 GB RAM
